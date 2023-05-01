@@ -1,0 +1,92 @@
+[
+  {
+    "title": "La ladrona de libros",
+    "description": "Libro histórico",
+    "thumbnail": "N/A",
+    "price": 25000,
+    "stock": 25,
+    "code": "32A27",
+    "id": 1
+  },
+  {
+    "title": "Astrología",
+    "description": "Libro de Autoayuda",
+    "thumbnail": "N/A",
+    "price": 20000,
+    "stock": 20,
+    "code": "31B28",
+    "id": 2
+  },
+  {
+    "title": "Assasins Creed Origins",
+    "description": "Libro basado en un videojuego",
+    "thumbnail": "N/A",
+    "price": 17000,
+    "stock": 25,
+    "code": "30C29",
+    "id": 3
+  },
+  {
+    "title": "Hellboy",
+    "description": "Comic",
+    "thumbnail": "N/A",
+    "price": 30000,
+    "stock": 25,
+    "code": "29D30",
+    "id": 4
+  },
+  {
+    "title": "Hellsing",
+    "description": "Manga",
+    "thumbnail": "N/A",
+    "price": 12000,
+    "stock": 25,
+    "code": "28E31",
+    "id": 5
+  },
+  {
+    "title": "Neon Genesis Evangelion",
+    "description": "Manga",
+    "thumbnail": "N/A",
+    "price": 18000,
+    "stock": 25,
+    "code": "27F32",
+    "id": 6
+  },
+  {
+    "title": "Gran Libro de la Cocina Chilena",
+    "description": "Libro de Cocina",
+    "thumbnail": "N/A",
+    "price": 50000,
+    "stock": 25,
+    "code": "26G33",
+    "id": 7
+  },
+  {
+    "title": "El Quijote de la Mancha",
+    "description": "Libro de antología",
+    "thumbnail": "N/A",
+    "price": 50000,
+    "stock": 25,
+    "code": "25H34",
+    "id": 8
+  },
+  {
+    "title": "Batman: Año Uno",
+    "description": "Comic",
+    "thumbnail": "N/A",
+    "price": 10000,
+    "stock": 25,
+    "code": "24I35",
+    "id": 9
+  },
+  {
+    "title": "Signos y Símbolos",
+    "description": "Libro de Conocimiento",
+    "thumbnail": "N/A",
+    "price": 25000,
+    "stock": 25,
+    "code": "23J36",
+    "id": 10
+  }
+]

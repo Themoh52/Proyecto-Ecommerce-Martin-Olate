@@ -2,7 +2,7 @@ import fs from "fs"
 
 class ProductManager{
     constructor(){
-        this.path="./db/db.json";
+        this.path="./db/products.json";
     }
 
     async readProducts(){
@@ -73,11 +73,13 @@ class ProductManager{
       
     }
 
-    async updateProduct(updateProduct={id,title,description,thumbnail,price,stock,code}){
+    async updateProduct( id,updateProduct={title,description,thumbnail,price,stock,code}){
         try {
           const products = await this.readProducts();
-        products.map((product)=>{
-            if(product.id===updateProduct.id){
+          const found = products.find((product) => product.id == id);
+          if(found){
+            products.map((product)=>{
+                if(product.id===updateProduct.id){
                 product.id = updateProduct.id;
                 product.title = updateProduct.title;
                 product.description = updateProduct.description;
@@ -91,7 +93,8 @@ class ProductManager{
             else{
                 console.log("producto no encontrado")
             }
-        });
+            });
+          }
         await this.writeProducts(products);  
         } catch (error) {
             throw new error(error.message);
@@ -127,6 +130,7 @@ class Product{
         this.price=price;
         this.stock=stock;
         this.code=code;
+        this.status =true;
     if(this.title=="" && this.description=="" &&  this.thumbnail=="" && this.price==NaN && this.stock==NaN && this.code==""){
         throw new Error("No se ingresó el producto. El producto debe tener un nombre, y los precios y stock debe tener datos numéricos.")
     }    

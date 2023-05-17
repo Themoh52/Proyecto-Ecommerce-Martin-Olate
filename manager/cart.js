@@ -8,35 +8,35 @@ class CartManager{
 
     async readCarts(){
         try {
-          const products = await fs.promises.readFile(this.path,'utf-8');
-        return JSON.parse(products);  
+          const carts = await fs.promises.readFile(this.path,'utf-8');
+        return JSON.parse(carts);  
         } catch (error) {
           throw new error(error.message);  
         }
         
     }
 
-    async writeCarts(products){
+    async writeCarts(carts){
         try {
-          await fs.promises.writeFile(this.path,JSON.stringify(products, null, 2))  
+          await fs.promises.writeFile(this.path,JSON.stringify(carts, null, 2))  
         } catch (error) {
             throw new error(error.message);  
         }
         
     }
 
-    async addCart({title,description,thumbnail,price,stock,code}){
+    async addCart(product){
         try {
           const carts = await this.readCarts();
-        const cart = new Cart(title,description,thumbnail,price,stock,code);
-        const checkCartcode = carts.find((p) => p.code === carts.code);
-        if (checkCartcode){
+        const cart = new Cart({products:[product.id]});
+        const checkCartid = carts.find((p) => p.id === cart.id);
+        if (checkCartid){
             return ('Carrito no ingresado. El carrito que quisiste crear ya existe.');
         }else{
-            if (products.length) {
-            product.id = carts[carts.length-1].id+1;
+            if (cart.length) {
+            cart.id = carts[carts.length-1].id+1;
             } else {
-            product.id=1;
+            cart.id=1;
             }   
         carts.push(cart);
         this.writeCarts(carts);    
@@ -48,7 +48,7 @@ class CartManager{
     }
     
 
-    async getCart() {
+    async getCarts() {
         try {
            const carts = await this.readCarts();
         return carts; 
@@ -73,26 +73,28 @@ class CartManager{
       
     }
 
-    async updateCart(updateCart={id,title,description,thumbnail,price,stock,code}){
+    async updateCart(){
         try {
-          const carts = await this.readCarts();
-        carts.map((cart)=>{
-            if(cart.id===updateCart.id){
-                cart.id = updateCart.id;
-                cart.title = updateCart.title;
-                cart.description = updateCart.description;
-                cart.price = updateCart.price;
-                cart.thumbnail = updateCart.thumbnail;
-                cart.code = updateCart.code;
-                cart.stock = updateCart.stock;
-                
-                return products;
-            }
-            else{
-                return("producto no encontrado")
-            }
-        });
-        await this.writeCarts(carts);  
+            const carts = await this.getCarts()
+            const cart = data.find((cart) => cart.id == id);
+            if (cart) {
+                const product = cart.products.find((prod) => prod.id == product.id);
+                if (product) {
+                    product.quantity = product.quantity + 1
+                    const index = cart.products.indexOf(product)
+                    cart.products.splice(index, 1, product)
+                    const indexCart = data.indexOf(cart)
+                    data.splice(indexCart, 1, cart)
+                    await this.writeCarts(carts);
+                } else {
+                    cart.products.push({idProduct: product.id, quantity: 1})
+                    const indexCart = data.indexOf(cart)
+                    data.splice(indexCart, 1, cart)
+                    await this.writeCarts(carts);
+                }
+            } else {
+                return ("No existe el carrito");
+            } 
         } catch (error) {
             throw new error(error.message);
         }
@@ -115,7 +117,7 @@ class CartManager{
         }
 
     }
-    
+
 }
 
 class Cart{    

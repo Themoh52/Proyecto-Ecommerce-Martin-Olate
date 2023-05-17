@@ -4,14 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inicio</title>
 </head>
 <body>
-    <form action="" method="post">
+    <section>
+        <h1>Librería Capibara</h1>
+    </section>
+    <section>
+        <h2>Sobre nosotros</h2>
+        <p>Bienvenidos a nuestra libería, donde podrás consultar los tomos disponibles en nuestra tienda en línea</p>
+    </section>
+    <section>
+        <h2>Agregar Productos</h2>
+        <p>¿Deseas que agreguemos un nuevo libro a nuestro catálogo? introduce sus datos y veremos si podemos agregarlo en un futuro</p>
+        <form action="" method="post">
+            <label for="Title">Título</label>
+            <input id="inputTitle" type="text" name="Título">
+            <label for="Desciption">Descripción</label>
+            <input id="inputDescription" type="text" name="Descripción">
+            <label for="Price">Precio</label>
+            <input id="inputPrice" type="number" name="Precio">
+            <label for="Code">Código</label>
+            <input id="inputCode" type="text" name="Código">
+            <label for="Stock">Stock</label>
+            <input id="inputStock" type="number" name="Stock">
+            <label for="Category">Categoría</label>
+            <input id="inputCategory" type="text" name="Categoría">
+            <input id ="newProduct" type="submit" value="Agregar Producto">
+            <button type="submit">Crear carrito</button>
+            <button type="reset">Vaciar carrito</button>
+        </form>
+    </section>
 
 
 
     </form>
 
 </body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./js/index.js"></script>
 </html>

@@ -1,13 +1,16 @@
+import ProductManager from "../../manager/product.js";
 import express from express;
 import CartManager from "../manager/cart.js";
+import ProductManager from "../../manager/product.js";
 
 const cartRouter = express.Router();
 
 const carts = new CartManager();
+const products = new ProductManager();
 
 cartRouter.get('api/carts/',async (req,res)=>{
    const limit = req.query.limit;
-   const cartList = await carts.getcarts()
+   const cartList = await carts.getCarts()
    if (limit) {
       const showcarts = cartList.slice(0,limit);
       res.status(200).json(showcarts);
@@ -18,7 +21,7 @@ cartRouter.get('api/carts/',async (req,res)=>{
 
 cartRouter.get("api/carts/:id",async (req,res)=>{
    const id = req.params.id;
-   const found = await carts.getcartById(parseInt(id));
+   const found = await carts.getCartById(parseInt(id));
    if (found) {
       res.status(200).json(found)
    } else {
@@ -26,8 +29,29 @@ cartRouter.get("api/carts/:id",async (req,res)=>{
    }   
 });
 
-cartRouter.post("api/carts/new",async (req,res)=>{
-    
+cartRouter.post("api/carts/create",async (req,res)=>{
+   const data = await carts.getCart();
+   await carts.addCart({ products: [] })
+   res.status(200).json(data)    
+});
+
+cartRouter.post("api/carts/:cid/:pid",async (req,res)=>{
+   const dataCarts = await carts.getCarts()
+   const dataProducts = await products.getProducts()
+   const cartId = req.params.cid
+   const productId = req.params.pid
+   const cartFound = dataCarts.find((ele) => ele.id == cartId)
+   const productFound = dataProducts.find((ele) => ele.id == parseInt(productId))
+   if (cartFound && !productFound) {
+    const product = await carts.updateCart(parseInt(cartId), parseInt(productId)) 
+   res.status(200).json(product);  
+   } else if(cartFound && productFound) {
+      
+   } else {
+       res.status(404).json("No existe ni el carrito y ni el producto en cuestión")
+   }
+   
+      
 });
 
 cartRouter.put("api/carts/:uid",async (req,res)=>{
@@ -46,7 +70,7 @@ cartRouter.delete("api/carts/:rid",async (req,res)=>{
    const rid = req.params.rid;
    const remove = carts.removecart(rid);
    if (remove) {
-      res.status(200).send("carto eliminado");
+      res.status(200).send("carrito eliminado");
    } else {
       res.status(404).send("No se encontró el carrito a eliminar")
    }

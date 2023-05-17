@@ -22,9 +22,27 @@ app.use("/api/carts", cartRouter);
 
 
 
-app.listen(port,()=>{
+const server = app.listen(port,()=>{
     console.log(`Servidor conectado en el puerto ${port}`)
 })
 
+const io = new Server(server);
 
+io.on('connection', async (socket)=>{
 
+    console.log("Nuevo usuario conectado")
+    const products = await products.readProducts();
+    io.sockets.emit('update', products)
+    io.sockets.emit('message', "Saludos, soy Prueba1, y ahora te presentamos el espacio para agregar productos a nuestra Base de Datos");
+
+    socket.on('NewProduct', async (newProduct)=>{
+        await products.addProduct(newProduct);
+        const products = await products.readProducts();
+        io.sockets.emit('update', products)
+    })
+
+    socket.on('showProducts', () =>{
+        io.sockets.emit('update', products.getProducts())
+    })
+
+})

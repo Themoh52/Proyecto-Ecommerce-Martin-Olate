@@ -1,9 +1,8 @@
-import ProductManager from "../../manager/product.js";
-import express from express;
-import CartManager from "../manager/cart.js";
+import  Express  from "express";
+import CartManager from "../../manager/cart.js";
 import ProductManager from "../../manager/product.js";
 
-const cartRouter = express.Router();
+const cartRouter = Express.Router();
 
 const carts = new CartManager();
 const products = new ProductManager();

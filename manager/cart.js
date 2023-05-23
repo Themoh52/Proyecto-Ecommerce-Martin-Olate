@@ -135,4 +135,4 @@ class Cart{
     }
 }
 
-export default CartManager
+export default CartManager;

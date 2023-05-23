@@ -2,8 +2,9 @@
 import express from "express";
 import productRouter from "./routes/productRouter.js";
 import cartRouter from "./routes/cartsRouter.js";
+import webRouter from "./routes/webRouter.js";
 import handlebars from "express-handlebars";
-import Server from "socket.io";
+import { Server } from "socket.io";
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.set("views engine","handlebars");
 
 app.use("/api/products",productRouter);
 app.use("/api/carts", cartRouter);
-
+app.use("/book",webRouter)
 
 
 const server = app.listen(port,()=>{

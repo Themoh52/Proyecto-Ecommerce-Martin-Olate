@@ -1,11 +1,11 @@
 import  Express  from "express";
-import ProductManager from "../../manager/product.js";
 
-const productRouter = Express.Router();
 
-const products = new ProductManager();
+const webRouter = Express.Router();
 
-productRouter.get('api/products/',async (req,res)=>{
+
+
+webRouter.get('api/products/',async (req,res)=>{
    const limit = req.query.limit;
    const productList = await products.getProducts()
    if (limit) {
@@ -16,7 +16,7 @@ productRouter.get('api/products/',async (req,res)=>{
    }   
    });
 
-productRouter.get("api/products/:id",async (req,res)=>{
+webRouter.get("api/products/:id",async (req,res)=>{
    const id = req.params.id;
    const found = await products.getProductById(parseInt(id));
    if (found) {
@@ -26,7 +26,7 @@ productRouter.get("api/products/:id",async (req,res)=>{
    }   
 });
 
-productRouter.post("api/products/new",async (req,res)=>{
+webRouter.post("api/products/new",async (req,res)=>{
    let newProduct = req.body;
    const requiredData = ["title", "description", "code", "price", "stock", "category"];
    const allData = requiredData.every(prop => newProduct[prop]);
@@ -43,7 +43,7 @@ productRouter.post("api/products/new",async (req,res)=>{
    } 
 });
 
-productRouter.put("api/products/:uid",async (req,res)=>{
+webRouter.put("api/products/:uid",async (req,res)=>{
    const id = req.params.uid;
    const found = await products.getProductById(parseInt(id));
    if (found) {
@@ -56,7 +56,7 @@ productRouter.put("api/products/:uid",async (req,res)=>{
    }
 });
 
-productRouter.delete("api/products/:rid",async (req,res)=>{
+webRouter.delete("api/products/:rid",async (req,res)=>{
    const id = req.params.rid;
    const found = await products.getProductById(parseInt(id))
    if (found) {
@@ -68,5 +68,4 @@ productRouter.delete("api/products/:rid",async (req,res)=>{
 
 });
 
-export default productRouter
-
+export default webRouter

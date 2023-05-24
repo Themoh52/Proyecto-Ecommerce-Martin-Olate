@@ -24,4 +24,4 @@ function listOfProducts (products){
     return JSON.stringify(products, null, 2);
 }
 
-socket.emit('showProduct')
+socket.emit('showProducts')

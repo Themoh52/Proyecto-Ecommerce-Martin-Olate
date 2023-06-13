@@ -1,71 +1,53 @@
 import  Express  from "express";
-import ProductManager from "../../manager/product.js";
+import { productManager } from "../../manager/product.mongoose.js";
 
 const productRouter = Express.Router();
 
-const products = new ProductManager();
+const service = new productManager();
 
 productRouter.get('api/products/',async (req,res)=>{
    const limit = req.query.limit;
-   const productList = await products.getProducts()
-   if (limit) {
-      const showProducts = productList.slice(0,limit);
-      res.status(200).json(showProducts);
-   } else {
-      res.status(200).json(productList);
-   }   
+   const showProducts = await service.getProducts(limit); 
+   res.status(200).json(showProducts);
    });
 
 productRouter.get("api/products/:id",async (req,res)=>{
-   const id = req.params.id;
-   const found = await products.getProductById(parseInt(id));
-   if (found) {
-      res.status(200).json(found)
-   } else {
-      res.status(404).send("Lo siento, no encontramos el producto que buscas.")
-   }   
+   const id = req.params;
+   found = await service.getProductsbyId(id);
+   return res.status(200).json({
+      success: true,
+      payload: found
+    })
 });
 
 productRouter.post("api/products/new",async (req,res)=>{
-   let newProduct = req.body;
-   const requiredData = ["title", "description", "code", "price", "stock", "category"];
-   const allData = requiredData.every(prop => newProduct[prop]);
-   if (newProduct.id=="" && allData) {
-      newProduct = {...newProduct, id: data[data.length - 1].id + 1};
-      await products.addProduct({...newProduct, status:true});
-      return res.status(200).json({
-         status: "Exito",
-         message: "El producto se ha creado con éxito",
-         data: newProduct 
-      });
-   } else {
-     res.status(404).send("Lo siento, el producto no fue ingresado"); 
-   } 
+   const newProduct = await service.postProducts(req.body);
+   return res.status(200).json({
+      status: true,
+      message: "El producto se ha creado con éxito",
+      data: newProduct 
+   });
+
 });
 
-productRouter.put("api/products/:uid",async (req,res)=>{
+productRouter.put("api/products/:id",async (req,res)=>{
    const id = req.params.uid;
-   const found = await products.getProductById(parseInt(id));
-   if (found) {
-      const updateProduct = req.body;
-      const update = await products.updateProduct(id, updateProduct);
-      res.status(200).json(update);
-      return update;   
-   } else {
-      res.status(404).send("Lo siento, no encontrados el producto que buscas.")
-   }
+   updateProduct = service.putProducts(id,req.body)
+   return res.status(200).json({
+      status: true,
+      message: "El producto se ha actualizado con éxito",
+      data: updateProduct 
+   });
 });
 
-productRouter.delete("api/products/:rid",async (req,res)=>{
+productRouter.delete("api/products/:id",async (req,res)=>{
    const id = req.params.rid;
-   const found = await products.getProductById(parseInt(id))
-   if (found) {
-      const remove = products.removeProduct(rid);
-      res.status(200).send("Producto eliminado");
-   } else {
-      res.status(404).send("No se encontró el producto a eliminar")
-   }
-
+   const remove = service.deleteProducts(id)
+   return res.status(200).json({
+      status: true,
+      message: "El producto se ha eliminado con éxito",
+      data: remove 
+   });
 });
 
 export default productRouter

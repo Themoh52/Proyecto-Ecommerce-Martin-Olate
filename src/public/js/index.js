@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const socket = io();
 const button = document.getElementById("newProduct");
 
@@ -25,3 +27,24 @@ function listOfProducts (products){
 }
 
 socket.emit('showProducts')
+
+let userEmail = "";
+
+async function askmail(){
+    const {value:name} = await Swal.fire({
+        title: "Ingresa tu correo",
+        input: "text",
+        inputLabel: "Tu correo",
+        inputValue: "",
+        showCancelButton: false,
+        inputValidator: (value) =>{
+            if(!value){
+                return "Debes ingresar un correo!!"
+            }
+        },
+    })
+
+    userEmail=name
+}
+
+askmail();

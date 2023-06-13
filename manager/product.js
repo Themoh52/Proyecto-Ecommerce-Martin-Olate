@@ -123,7 +123,7 @@ class ProductManager{
 }
 
 class Product{    
-    constructor(title, description, thumbnail, price, stock, code){
+    constructor(title, description, thumbnail, price, stock, code, category){
         this.title=title;
         this.description=description;
         this.thumbnail=thumbnail;
@@ -131,7 +131,8 @@ class Product{
         this.stock=stock;
         this.code=code;
         this.status =true;
-    if(this.title=="" && this.description=="" &&  this.thumbnail=="" && this.price==NaN && this.stock==NaN && this.code==""){
+        this.category=category;
+    if(this.title=="" && this.description=="" &&  this.thumbnail=="" && this.price==NaN && this.stock==NaN && this.code=="" && this.category=="" ){
         throw new Error("No se ingresó el producto. El producto debe tener un nombre, y los precios y stock debe tener datos numéricos.")
     }    
         console.log("Producto ingresado")

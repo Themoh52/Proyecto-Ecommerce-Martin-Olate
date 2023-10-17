@@ -1,6 +1,3 @@
-import { UserModel } from "./DAO/models/user.model.js";
-
-
 //--multer--//
 import multer from "multer";
 
@@ -37,12 +34,12 @@ export async function connectMongo() {
 }
 
 //----//
-let res = await UserModel.find({lastname:"Olate"}.explain("executionStats"));
+//let res = await UserModel.find({lastname:"Olate"}.explain("executionStats"));
 
 
 //--Socket--//
 import  {Server}  from "socket.io";
-import { UserModel } from "./DAO/models/user.model";
+import { UserModel } from "./DAO/models/user.model.js";
 export async function connecSocket(server){
   const io = new Server(server);
   let msgs = [];
@@ -72,3 +69,7 @@ export async function connecSocket(server){
   })
 }
 
+
+import bcrypt from "bcrypt"
+export const createHash = (password) => bcrypt.hashSync(password,bcrypt.genSaltSync(10));
+export const isValidPassword = (password,hashPassword) => bcrypt.compareSync(password,hashPassword);

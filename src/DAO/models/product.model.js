@@ -3,11 +3,11 @@ import { Schema, model } from "mongoose";
 const schema = new Schema({
   title: { type: String, required: true, max: 100 , unique:true},
   description: { type: String, required: true, max: 100 , unique:true},
-  price: { type: Number, required: true, min:0, unique:true},
+  price: { type: Number, required: true, min:0, unique:true, index: true},
   code:{type: String,unique:true},
   stock:{type: Number, min:1, },
   status:{type: Boolean, default:true},
-  category:{type: String, },
+  category:{type: String, index:true},
   thumbnails:{type: String, }
 });
 

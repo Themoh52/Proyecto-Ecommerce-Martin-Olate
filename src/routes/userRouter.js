@@ -1,4 +1,4 @@
-import { Router } from "express";
+import  Express  from "express";
 import { userService } from "../service/users.Service.js";
 
 export const usersRouter = Express.Router;
@@ -24,9 +24,9 @@ usersRouter.get("/", async (req, res) => {
   });
   
   usersRouter.post("/", async (req, res) => {
-    const { firstName, lastName, email } = req.body;
+    const { firstName, lastName, email , password} = req.body;
     try {
-      const users = await service.postUsers(firstName, lastName, email);
+      const users = await service.postUsers(firstName, lastName, email, password);
       return res.status(201).json({
         status: "success",
         msg: "user created",
@@ -44,9 +44,9 @@ usersRouter.get("/", async (req, res) => {
   
   usersRouter.put("/:id", async (req, res) => {
     const { id } = req.params;
-    const { firstName, lastName, email } = req.body;
+    const { firstName, lastName, email , password} = req.body;
     try {
-      const users = await service.putUsers(id,firstName, lastName, email); 
+      const users = await service.putUsers(id,firstName, lastName, email, password); 
     } catch (e) {
       console.log(e);
       return res.status(500).json({
@@ -75,4 +75,5 @@ usersRouter.get("/", async (req, res) => {
       });
     }
   });
-  
+
+export default usersRouter
